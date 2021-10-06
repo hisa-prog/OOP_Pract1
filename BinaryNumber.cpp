@@ -8,7 +8,8 @@ namespace vz_pract
 	{
 		id = ++idCounter;
 		max_binary_lenght = 10;
-		binary_string = new char[max_binary_lenght] {'0','0','0', '0', '0', '0', '0', '0', '0','1'};
+		binary_string = new char[max_binary_lenght+1] {'0','0','0', '0', '0', '0', '0', '0', '0','1'};
+		binary_string[max_binary_lenght] = '\0';
 		std::cout << "\nCоздана строка <" << id << "> \n";
 	}
 
@@ -30,7 +31,7 @@ namespace vz_pract
 	{
 		id = ++idCounter;
 		max_binary_lenght = string_of_number.max_binary_lenght;
-		binary_string = new char[max_binary_lenght] {0};
+		binary_string = new char[max_binary_lenght+1];
 		for (int i = 0; i < max_binary_lenght; i++)
 		{
 			binary_string[i] = string_of_number.binary_string[i];
@@ -55,10 +56,11 @@ namespace vz_pract
 		return binary_string;
 	}
 
-	void BinaryNumber::set_binary_string(char* array_of_number)
+	void BinaryNumber::set_binary_string(const char* array_of_number)
 	{
 		max_binary_lenght = strlen(array_of_number);
-		binary_string = new char[max_binary_lenght] {0};
+		delete[] binary_string;
+		binary_string = new char[max_binary_lenght+1];
 		for (int i = 0; i < max_binary_lenght; i++)
 		{
 			binary_string[i] = array_of_number[i];
@@ -76,13 +78,22 @@ namespace vz_pract
 
 	const BinaryNumber& BinaryNumber::operator= (const BinaryNumber& string_of_number)
 	{
+		if (this == &string_of_number)
+			return *this;
+
+		delete[] binary_string;
 		max_binary_lenght = string_of_number.max_binary_lenght;
-		binary_string = new char[max_binary_lenght] {0};
-		for (int i = 0; i < max_binary_lenght; i++)
+
+		if (string_of_number.binary_string)
 		{
-			binary_string[i] = string_of_number.binary_string[i];
+			binary_string = new char[max_binary_lenght+1];
+			for (int i = 0; i < max_binary_lenght; i++)
+				binary_string[i] = string_of_number.binary_string[i];
+			binary_string[max_binary_lenght] = '\0';
 		}
-		binary_string[max_binary_lenght] = '\0';
+		else
+			binary_string = 0;
+
 		return *this;
 	}
 
@@ -124,9 +135,9 @@ namespace vz_pract
 		}
 	}
 
-	const BinaryNumber BinaryNumber::operator ~ ()//беда, не робит! Не получилось переделать
+	BinaryNumber BinaryNumber::operator~()//беда, не робит! Не получилось переделать
 	{
-		BinaryNumber res = BinaryNumber();
+		BinaryNumber res(*this);
 		for (int i = 0; i < max_binary_lenght; i++)
 		{
 			if (binary_string[i] == '0') res.binary_string[i] = '1';
