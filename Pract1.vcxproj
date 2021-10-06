@@ -140,10 +140,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Pract1.cpp" />
-    <ClCompile Include="String.cpp" />
+    <ClCompile Include="BinaryNumber.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="String.h" />
+    <ClInclude Include="BinaryNumber.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

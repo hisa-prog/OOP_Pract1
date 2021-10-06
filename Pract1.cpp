@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-#include "String.h"
+#include "BinaryNumber.h"
 
 /*
 7)Класс инкапсулирует двоичное число, хранимое в виде строки S максимальной длины N. 
@@ -46,10 +46,10 @@ int main()
 	}
 
 	{
-		String S_1 = String(); //создаем строку по умолчанию
-		S_1.set_string(number); //вносим туда значения вышевведенной строки
+		BinaryNumber S_1 = BinaryNumber(); //создаем строку по умолчанию
+		S_1.set_binary_string(number); //вносим туда значения вышевведенной строки
 		std::cout << "\nВведенная строка:\n";
-		S_1.out_string();
+		S_1.out_binary_string();
 
 		int number_cycle_right;
 		std::cout << "\nВведите кол-во циклического сдвига вправо:\n";
@@ -58,7 +58,7 @@ int main()
 		std::cout << "\nПобитовый сдвиг числа вправо:";
 		S_1 >> number_cycle_right;
 		std::cout << "= ";
-		S_1.out_string();
+		S_1.out_binary_string();
 
 		int number_cycle_left;
 		std::cout << "\nВведите кол-во циклического сдвига влево:\n";
@@ -67,12 +67,13 @@ int main()
 		std::cout << "\nПобитовый сдвиг числа влево:";
 		S_1 << number_cycle_left;
 		std::cout << "= ";
-		S_1.out_string();
+		S_1.out_binary_string();
 
-		std::cout << "\nИнверсия числа " << S_1;
-		~S_1;
+		std::cout << "\nИнверсия числа " << S_1; //беда, не робит! Не получилось переделать
+		BinaryNumber S_2 = BinaryNumber();
+		S_2 = ~S_1;
 		std::cout << "= ";
-		S_1.out_string();
+		S_2.out_binary_string();
 	}
 	std::cout << "Конец программы!" << std::endl;
 }
