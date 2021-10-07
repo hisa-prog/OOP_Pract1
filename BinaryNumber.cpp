@@ -1,6 +1,6 @@
 #include "BinaryNumber.h"
 
-namespace vz_pract 
+namespace vz_pract
 {
 	int BinaryNumber::idCounter = 0;
 
@@ -8,7 +8,7 @@ namespace vz_pract
 	{
 		id = ++idCounter;
 		max_binary_lenght = 10;
-		binary_string = new char[max_binary_lenght+1] {'0','0','0', '0', '0', '0', '0', '0', '0','1'};
+		binary_string = new char[max_binary_lenght + 1]{ '0','0','0', '0', '0', '0', '0', '0', '0','1' };
 		binary_string[max_binary_lenght] = '\0';
 		std::cout << "\nCоздана строка <" << id << "> \n";
 	}
@@ -31,7 +31,7 @@ namespace vz_pract
 	{
 		id = ++idCounter;
 		max_binary_lenght = string_of_number.max_binary_lenght;
-		binary_string = new char[max_binary_lenght+1];
+		binary_string = new char[max_binary_lenght + 1];
 		for (int i = 0; i < max_binary_lenght; i++)
 		{
 			binary_string[i] = string_of_number.binary_string[i];
@@ -60,7 +60,7 @@ namespace vz_pract
 	{
 		max_binary_lenght = strlen(array_of_number);
 		delete[] binary_string;
-		binary_string = new char[max_binary_lenght+1];
+		binary_string = new char[max_binary_lenght + 1];
 		for (int i = 0; i < max_binary_lenght; i++)
 		{
 			binary_string[i] = array_of_number[i];
@@ -86,7 +86,7 @@ namespace vz_pract
 
 		if (string_of_number.binary_string)
 		{
-			binary_string = new char[max_binary_lenght+1];
+			binary_string = new char[max_binary_lenght + 1];
 			for (int i = 0; i < max_binary_lenght; i++)
 				binary_string[i] = string_of_number.binary_string[i];
 			binary_string[max_binary_lenght] = '\0';
@@ -102,26 +102,27 @@ namespace vz_pract
 		for (int i = 0; i < string_of_number.max_binary_lenght; i++)
 		{
 			out << string_of_number.binary_string[i];
-			}
-			out << "\n";
+		}
+		out << "\n";
 		return out;
 	}
 
-	const void BinaryNumber::operator >> (int bits)
+	const BinaryNumber& BinaryNumber::operator >> (int bits)
 	{
 		int safe;
 		for (int i = 0; i < bits; i++)
 		{
 			safe = binary_string[max_binary_lenght - 1];
-			for (int j = max_binary_lenght -1; j > 0; j--)
+			for (int j = max_binary_lenght - 1; j > 0; j--)
 			{
-				binary_string[j] = binary_string[j-1];
+				binary_string[j] = binary_string[j - 1];
 			}
 			binary_string[0] = safe;
 		}
+		return *this;
 	}
 
-	const void BinaryNumber::operator << (int bits)
+	const BinaryNumber& BinaryNumber::operator << (int bits)
 	{
 		int safe;
 		for (int i = 0; i < bits; i++)
@@ -133,9 +134,22 @@ namespace vz_pract
 			}
 			binary_string[max_binary_lenght - 1] = safe;
 		}
+		return *this;
 	}
 
-	BinaryNumber BinaryNumber::operator~()//беда, не робит! Не получилось переделать
+	//Копия инверсии создается потому что, мне кажется, что это немного правильней
+	//Посмотрим на конкретном примере:
+	//Допустим я где-то в условии, буду проверять 
+	// bool a(){
+	// a = true
+	// if(~a == false)...
+	//}
+	// при этом само "а" изменится, и всё пойдет на перекосяк
+	//или же
+	//например ~S1 || S1 сделать
+	//А вот и не получится, если нового объекта не создавать
+
+	BinaryNumber BinaryNumber::operator~()
 	{
 		BinaryNumber res(*this);
 		for (int i = 0; i < max_binary_lenght; i++)

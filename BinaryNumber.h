@@ -25,8 +25,8 @@ namespace vz_pract
 
 		const BinaryNumber& operator= (const BinaryNumber& string_of_number);
 		friend std::ostream& operator<< (std::ostream& out, const BinaryNumber& string_of_number);
-		const void operator >> (int bits); //циклический сдвиг вправо
-		const void operator << (int bits); //циклический сдвиг влево
+		const BinaryNumber& operator >> (int bits); //циклический сдвиг вправо
+		const BinaryNumber& operator << (int bits); //циклический сдвиг влево
 		BinaryNumber operator ~ (); // инверсия 
 	};
 
